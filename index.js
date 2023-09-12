@@ -5,7 +5,19 @@ document.querySelector('#loan-form').addEventListener('submit', function(e){
     // Show the loading animation
     document.querySelector('#loading').style.display = 'block';
 
-    setTimeout(calculateResults, 2000);
+    // Check if input fields are empty
+    const amount = document.getElementById('amount').value;
+    const interest = document.getElementById('interest').value;
+    const years = document.getElementById('years').value;
+    
+    if (amount === '' || interest === '' || years === '') {
+        // Display an alert for missing input
+        showInputAlert('Please fill in all input fields.');
+        // Hide the loader and prevent calculation
+        document.querySelector('#loading').style.display = 'none';
+    } else {
+        setTimeout(calculateResults, 2000);
+    }
 
     e.preventDefault();
 });
@@ -23,6 +35,8 @@ function calculateResults(){
     const principle = parseFloat(amount.value);
     const calculatedInterest = parseFloat(interest.value) / 100 / 12;
     const calculatedPayments = parseFloat(years.value) * 12;
+
+    
     
     // Calculate monthly payments
     const x = Math.pow(1 + calculatedInterest, calculatedPayments);
